@@ -66,4 +66,13 @@ class SessionManager
     public function getWaiterOpenSessions($waiterID) {
         return (new Waiter($waiterID))->getOpenSessions();
     }
+
+    public function getReadySessions() {
+        $filter = ['state' => SESSION_STATE_READY];
+        $options = ['sort' => ['update_time' => -1]];
+        $query = new MongoDB\Driver\Query($filter, $options);
+        $result = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
+        $array = $result->toArray();
+        return $array;
+    }
 }

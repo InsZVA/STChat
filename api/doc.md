@@ -46,8 +46,8 @@
 | newWaiter | data |
 | deleteWaiter | waiterId |
 | newSession | userId addition|
-| getUserHistorySession | userId [offset] [num] |
-| getWaiterOpenSession | waiterId |
+| getUserHistorySessions | userId [offset] [num] |
+| getWaiterOpenSessions | waiterId |
 | getSessionData | sessionId |
 | closeSession | sessionId |
 | userSendMessage | userId sessionId type content |
@@ -56,4 +56,5 @@
 | getSessionLastMessages | sessionId [num] |
 | getSessionAddition | sessionId |
 | getUserLastSession | userId |
+| getReadySessions | |
 

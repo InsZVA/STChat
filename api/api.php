@@ -59,13 +59,13 @@ switch($postData->requestMethod) {
         break;
     case "newSession":
         if (!checkControlLevel1($postData)) break;
-        if (isset($postData->userId) && isset($postData->adition)) {
+        if (isset($postData->userId) && isset($postData->addition)) {
             $sm = new SessionManager();
-            $sm->newReadySession($postData->userId, $postData->adition);
+            $sm->newReadySession($postData->userId, $postData->addition);
             OKResponse();
         }
         break;
-    case "getUserHistorySession":
+    case "getUserHistorySessions":
         if (!checkControlLevel1($postData)) break;
         if (isset($postData->userId)) {
             if (!isset($postData->num)) $postData->num = 20;
@@ -77,7 +77,7 @@ switch($postData->requestMethod) {
             exit(0);
         }
         break;
-    case "getWaiterOpenSession":
+    case "getWaiterOpenSessions":
         if (!checkControlLevel2($postData)) break;
         if (isset($postData->waiterId)) {
             $waiter = new Waiter($waiter);
@@ -165,6 +165,13 @@ switch($postData->requestMethod) {
             echo json_encode(['_id' => $result]);
             exit(0);
         }
+        break;
+    case "getReadySessions":
+        if (!checkControlLevel2($postData)) break;
+        $sm = new SessionManager();
+        $result = $sm->getReadySessions();
+        echo json_encode($result);
+        exit(0);
         break;
 }
 
