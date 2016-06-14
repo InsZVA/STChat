@@ -6,6 +6,7 @@
  * Date: 2016/6/12
  * Time: 11:35
  */
+
 class WaiterManager
 {
     public function __construct() {

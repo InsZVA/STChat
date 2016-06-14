@@ -43,7 +43,7 @@
 |---       |---       |
 | getWaiterList  |    |
 | waiterSendMessage | waiterId sessionId type content |
-| newWaiter | data |
+| newWaiter | data(must include _id(int)) |
 | deleteWaiter | waiterId |
 | newSession | userId addition|
 | getUserHistorySessions | userId [offset] [num] |

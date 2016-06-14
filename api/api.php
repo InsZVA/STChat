@@ -16,11 +16,13 @@ require_once ('../lib/Waiter.php');
 require_once ('../lib/WaiterManager.php');
 require_once ('../lib/SessionManager.php');
 require_once ('../lib/User.php');
+require_once ('../lib/common.php');
 
 function OKResponse() {
     echo '{"code":0, "msg":"success"}';
     exit(0);
 }
+
 
 $rawPost = file_get_contents('php://input');
 $postData = json_decode($rawPost);
@@ -80,7 +82,7 @@ switch($postData->requestMethod) {
     case "getWaiterOpenSessions":
         if (!checkControlLevel2($postData)) break;
         if (isset($postData->waiterId)) {
-            $waiter = new Waiter($waiter);
+            $waiter = new Waiter($postData->waiterId);
             if (!$waiter) break;
             $result = $waiter->getOpenSessions();
             echo json_encode($result);
@@ -162,7 +164,7 @@ switch($postData->requestMethod) {
             $sm = new SessionManager();
             $result = $sm->getUserLastSession($postData->userId);
             if (!$result) break;
-            echo json_encode(['_id' => $result]);
+            echo json_encode(['_id' => $result->getId()]);
             exit(0);
         }
         break;

@@ -6,9 +6,11 @@
  * Time: 12:39
  */
 
-require_once("../config/Config.php");
-require_once("Session.php");
-require_once("Waiter.php");
+require_once ("../config/Config.php");
+require_once ("Session.php");
+require_once ("Waiter.php");
+require_once ("common.php");
+
 
 class SessionManager
 {
@@ -59,6 +61,7 @@ class SessionManager
         $query = new MongoDB\Driver\Query($filter, $options);
         $result = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
         $array = $result->toArray();
+        produceOId($array);
         if (count($array) == 0) return false;
         return new Session($array[0]->_id);
     }
@@ -73,6 +76,7 @@ class SessionManager
         $query = new MongoDB\Driver\Query($filter, $options);
         $result = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
         $array = $result->toArray();
+        produceOId($array);
         return $array;
     }
 }

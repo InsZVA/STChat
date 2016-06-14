@@ -17,7 +17,7 @@ class Waiter
     public function __construct($_id) {
         $this->_id = $_id;
         $this->mongo = new MongoDB\Driver\Manager(Config::$mongoAddr);
-        $query = new MongoDB\Driver\Query(['_id' => $this->_id], ['projection' => '_id']);
+        $query = new MongoDB\Driver\Query(['_id' => $this->_id], ['projection' => ['_id' => 1]]);
         $cursor = $this->mongo->executeQuery(Config::$database . '.waiters', $query);
         $result = $cursor->toArray();
         if (count($result) == 0) return false;
@@ -43,11 +43,8 @@ class Waiter
         $query = new MongoDB\Driver\Query($filter, $options);
         $result = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
         $array = $result->toArray();
-        $ret = [];
-        foreach ($array as $id) {
-            $ret[] = new Session($id);
-        }
-        return $ret;
+        produceOId($array);
+        return $array;
     }
 
     public function sendMessage($sessionId, $type, $content) {
@@ -62,6 +59,7 @@ class Waiter
         $query = new MongoDB\Driver\Query(['_id' => $this->_id]);
         $cursor = $this->mongo->executeQuery(Config::$database . '.waiters', $query);
         $result = $cursor->toArray();
+        produceOId($result);
         return $result[0];
     }
 }

@@ -24,6 +24,7 @@ class User
             ['sort' => ['create_time' => -1], 'limit' => intval($num), 'skip' => intval($offset)]);
         $cursor = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
         $result = $cursor->toArray();
+        produceOId($result);
         return $result;
     }
 

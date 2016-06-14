@@ -24,9 +24,9 @@ class MessageManager
         $userID = $session->getUserID();
         $waiterID = $session->getWaiterID();
         $data = [
-            'session_id' => intval($sessionID),
-            'user_id' => intval($userID),
-            'waiter_id' => intval($waiterID),
+            'session_id' => $sessionID,
+            'user_id' => $userID,
+            'waiter_id' => $waiterID,
             'type' => $type,
             'sender' => $sender,
             'content' => $content,

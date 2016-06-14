@@ -14,16 +14,16 @@ class Session
     private $_id;
     private $mongo;
     public function __construct($_id) {
-        $this->_id = $_id;
+        $this->_id = new MongoDB\BSON\ObjectID($_id);
         $this->mongo = new MongoDB\Driver\Manager(Config::$mongoAddr);
         $query = new MongoDB\Driver\Query(['_id' => $this->_id], ['projection' => ['_id' => 1]]);
         $cursor = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
         $result = $cursor->toArray();
-        if (count($result) == 0) return false;
+        if (count($result) == 0) throw new Exception("unknown session id.");
     }
 
     public function getId() {
-        return $this->_id;
+        return $this->_id->__toString();
     }
 
     public function getState() {
@@ -58,18 +58,20 @@ class Session
     }
 
     public function getNewestMessages($lastTime) {
-        $query = new MongoDB\Driver\Query(['session_id' => $this->_id, 'create_time' => ['$gt' => $lastTime]],
+        $query = new MongoDB\Driver\Query(['session_id' => $this->_id->__toString(), 'create_time' => ['$gt' => $lastTime]],
             ['sort' => ['create_time' => -1]]);
-        $cursor = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
+        $cursor = $this->mongo->executeQuery(Config::$database . '.messages', $query);
         $result = $cursor->toArray();
+        produceOId($result);
         return $result;
     }
 
     public function getLastMessages($num) {
-        $query = new MongoDB\Driver\Query(['session_id' => $this->_id],
+        $query = new MongoDB\Driver\Query(['session_id' => $this->_id->__toString()],
             ['sort' => ['create_time' => -1], 'limit' => intval($num)]);
-        $cursor = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
+        $cursor = $this->mongo->executeQuery(Config::$database . '.messages', $query);
         $result = $cursor->toArray();
+        produceOId($result);
         return $result;
     }
 
@@ -105,6 +107,7 @@ class Session
         $query = new MongoDB\Driver\Query(['_id' => $this->_id]);
         $cursor = $this->mongo->executeQuery(Config::$database . '.sessions', $query);
         $result = $cursor->toArray();
+        produceOId($result);
         return $result[0];
     }
 }
