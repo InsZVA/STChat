@@ -20,7 +20,7 @@ class Waiter
         $query = new MongoDB\Driver\Query(['_id' => $this->_id], ['projection' => ['_id' => 1]]);
         $cursor = $this->mongo->executeQuery(Config::$database . '.waiters', $query);
         $result = $cursor->toArray();
-        if (count($result) == 0) return false;
+        if (count($result) == 0) throw new Exception("unknown waiter id");
     }
 
     public function setImage($url) {

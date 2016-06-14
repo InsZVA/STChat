@@ -39,22 +39,25 @@
 
 ## API列表
 
-| API方法  | 请求参数  |
-|---       |---       |
-| getWaiterList  |    |
-| waiterSendMessage | waiterId sessionId type content |
-| newWaiter | data(must include _id(int)) |
-| deleteWaiter | waiterId |
-| newSession | userId addition|
-| getUserHistorySessions | userId [offset] [num] |
-| getWaiterOpenSessions | waiterId |
-| getSessionData | sessionId |
-| closeSession | sessionId |
-| userSendMessage | userId sessionId type content |
-| sessionSetWaiter | sessionId waiterId |
-| getSessionNewestMessages | sessionId |
-| getSessionLastMessages | sessionId [num] |
-| getSessionAddition | sessionId |
-| getUserLastSession | userId |
-| getReadySessions | |
+| API方法  | 请求参数  | 测试状态 |
+|---       |---       | OK |
+| getWaiterList  |    | OK |
+| waiterSendMessage | waiterId sessionId type content | OK |
+| newWaiter | data(must include _id(int)) | OK |
+| deleteWaiter | waiterId | OK |
+| newSession | userId addition| OK |
+| getUserHistorySessions | userId [offset] [num] | OK |
+| getWaiterOpenSessions | waiterId | OK |
+| getSessionData | sessionId | OK |
+| closeSession | sessionId | OK |
+| userSendMessage | userId sessionId type content | OK |
+| sessionSetWaiter | sessionId waiterId | OK |
+| getSessionNewestMessages | sessionId | OK |
+| getSessionLastMessages | sessionId [num] | OK |
+| getSessionAddition | sessionId | OK |
+| getUserLastSession | userId | OK |
+| getReadySessions | | OK |
 
+## 注意
+
+`user._id`和`waiter._id`是整数，`session._id`是hash串，`newWaiter`调用时需指定`_id`

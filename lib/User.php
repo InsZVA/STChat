@@ -16,7 +16,7 @@ class User
     public function __construct($_id) {
         $this->_id = $_id;
         $this->mongo = new MongoDB\Driver\Manager(Config::$mongoAddr);
-        if (!$this->verify()) return false;
+        if (!$this->verify()) throw new Exception("unknown user id.");
     }
 
     public function getHistorySessions($offset, $num) {
