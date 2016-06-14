@@ -40,10 +40,10 @@
 ## API列表
 
 | API方法  | 请求参数  | 测试状态 |
-|---       |---       | OK |
+|---       |---       |--- |
 | getWaiterList  |    | OK |
 | waiterSendMessage | waiterId sessionId type content | OK |
-| newWaiter | data(must include _id(int)) | OK |
+| newWaiter | data | OK |
 | deleteWaiter | waiterId | OK |
 | newSession | userId addition| OK |
 | getUserHistorySessions | userId [offset] [num] | OK |
